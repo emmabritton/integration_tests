@@ -1,0 +1,20 @@
+[package]
+name = "integration_tester"
+version = "0.1.0"
+edition = "2021"
+authors = ["Emma Britton <emmabritton@pm.me>"]
+description = "Integration tests for pixel-graphics-lib"
+license-file = "LICENSE"
+repository = "https://github.com/emmabritton/integration_tester"
+readme = "README.md"
+publish = false
+
+[dependencies]
+pixels-graphics-lib = { version = "0.17.0", default-features = false, features = ["scenes", "window_prefs", "notosans", "embedded"] }
+anyhow = "1.0.81"
+noto-sans-mono-bitmap = { version = "0.2.0", features = ["size_16", "regular", "bold"] }
+embedded-graphics = "0.8.1"
+u8g2-fonts = "0.4.0"
+eg-seven-segment = "0.2.0"
+serde = { version = "1.0.197", features = ["derive"] }
+fontdue = "0.8.0"

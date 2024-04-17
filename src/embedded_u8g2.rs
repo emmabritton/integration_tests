@@ -1,17 +1,17 @@
-use u8g2_fonts::fonts::u8g2_font_lubI14_tf;
+use crate::{SceneName, SceneResult};
 use embedded_graphics::pixelcolor::Rgb888;
 use embedded_graphics::prelude::Point;
 use pixels_graphics_lib::buffer_graphics_lib::Graphics;
-use pixels_graphics_lib::MouseData;
-use pixels_graphics_lib::prelude::*;
 use pixels_graphics_lib::prelude::SceneUpdateResult::Pop;
-use u8g2_fonts::FontRenderer;
+use pixels_graphics_lib::prelude::*;
+use pixels_graphics_lib::MouseData;
+use u8g2_fonts::fonts::u8g2_font_lubI14_tf;
 use u8g2_fonts::types::{FontColor, HorizontalAlignment, VerticalPosition};
-use crate::{SceneName, SceneResult};
+use u8g2_fonts::FontRenderer;
 
 pub struct EmbeddedU8G2Scene {
     result: SceneUpdateResult<SceneResult, SceneName>,
-    font: FontRenderer
+    font: FontRenderer,
 }
 
 impl EmbeddedU8G2Scene {
@@ -24,26 +24,33 @@ impl EmbeddedU8G2Scene {
 }
 
 impl Scene<SceneResult, SceneName> for EmbeddedU8G2Scene {
-    fn render(&self, graphics: &mut Graphics, _: &MouseData, _: &[KeyCode]) {
+    fn render(&self, graphics: &mut Graphics, _: &MouseData, _: &FxHashSet<KeyCode>) {
         graphics.clear(BLACK);
 
-        self.font.render_aligned(
-            "The quick brown fox jumped\nover the lazy dogs.",
-            Point::new(16,16),
-            VerticalPosition::Top,
-            HorizontalAlignment::Left,
-            FontColor::Transparent(Rgb888::new(255,255,255)),
-            graphics
-        ).unwrap();
+        self.font
+            .render_aligned(
+                "The quick brown fox jumped\nover the lazy dogs.",
+                Point::new(16, 16),
+                VerticalPosition::Top,
+                HorizontalAlignment::Left,
+                FontColor::Transparent(Rgb888::new(255, 255, 255)),
+                graphics,
+            )
+            .unwrap();
     }
 
-    fn on_key_up(&mut self, key: KeyCode, _: &MouseData, _: &[KeyCode]) {
+    fn on_key_up(&mut self, key: KeyCode, _: &MouseData, _: &FxHashSet<KeyCode>) {
         if key == KeyCode::Escape {
             self.result = Pop(None);
         }
     }
 
-    fn update(&mut self, _: &Timing, _: &MouseData, _: &[KeyCode]) -> SceneUpdateResult<SceneResult, SceneName> {
+    fn update(
+        &mut self,
+        _: &Timing,
+        _: &MouseData,
+        _: &FxHashSet<KeyCode>,
+    ) -> SceneUpdateResult<SceneResult, SceneName> {
         self.result.clone()
     }
 }

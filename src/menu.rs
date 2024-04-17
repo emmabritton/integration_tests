@@ -1,9 +1,9 @@
+use crate::{SceneName, SceneResult};
 use pixels_graphics_lib::buffer_graphics_lib::Graphics;
-use pixels_graphics_lib::prelude::*;
 use pixels_graphics_lib::prelude::SceneUpdateResult::Nothing;
+use pixels_graphics_lib::prelude::*;
 use pixels_graphics_lib::scenes::SceneUpdateResult::Push;
 use pixels_graphics_lib::ui::prelude::*;
-use crate::{SceneName, SceneResult};
 
 pub struct MenuScene {
     bg_color: Color,
@@ -19,8 +19,16 @@ impl MenuScene {
         Box::new(MenuScene {
             bg_color: style.background,
             labels: vec![
-                Text::new("Embedded Graphics", TextPos::px(coord!(16, 16)), style.title_text.clone()),
-                Text::new("Noto Sans Bitmap", TextPos::px(coord!(16, 100)), style.title_text.clone()),
+                Text::new(
+                    "Embedded Graphics",
+                    TextPos::px(coord!(16, 16)),
+                    style.title_text.clone(),
+                ),
+                Text::new(
+                    "Noto Sans Bitmap",
+                    TextPos::px(coord!(16, 100)),
+                    style.title_text.clone(),
+                ),
             ],
             u8g2: Button::new(coord!(20, 30), "U8G2", Some(100), &style.button),
             segments: Button::new(coord!(20, 52), "Segments", Some(100), &style.button),
@@ -31,7 +39,7 @@ impl MenuScene {
 }
 
 impl Scene<SceneResult, SceneName> for MenuScene {
-    fn render(&self, graphics: &mut Graphics, mouse: &MouseData, _: &[KeyCode]) {
+    fn render(&self, graphics: &mut Graphics, mouse: &MouseData, _: &FxHashSet<KeyCode>) {
         graphics.clear(self.bg_color);
         for text in &self.labels {
             text.render(graphics);
@@ -41,7 +49,13 @@ impl Scene<SceneResult, SceneName> for MenuScene {
         self.noto.render(graphics, mouse);
     }
 
-    fn on_mouse_click(&mut self, down_at: Coord, mouse: &MouseData, mouse_button: MouseButton, _: &[KeyCode]) {
+    fn on_mouse_click(
+        &mut self,
+        down_at: Coord,
+        mouse: &MouseData,
+        mouse_button: MouseButton,
+        _: &FxHashSet<KeyCode>,
+    ) {
         if mouse_button == MouseButton::Left {
             if self.u8g2.on_mouse_click(down_at, mouse.xy) {
                 self.result = Push(false, SceneName::EmbeddedU8g2);
@@ -55,7 +69,12 @@ impl Scene<SceneResult, SceneName> for MenuScene {
         }
     }
 
-    fn update(&mut self, _: &Timing, _: &MouseData, _: &[KeyCode]) -> SceneUpdateResult<SceneResult, SceneName> {
+    fn update(
+        &mut self,
+        _: &Timing,
+        _: &MouseData,
+        _: &FxHashSet<KeyCode>,
+    ) -> SceneUpdateResult<SceneResult, SceneName> {
         self.result.clone()
     }
 

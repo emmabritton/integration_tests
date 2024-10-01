@@ -50,6 +50,7 @@ impl Scene<SceneResult, SceneName> for EmbeddedU8G2Scene {
         _: &Timing,
         _: &MouseData,
         _: &FxHashSet<KeyCode>,
+        _: &Window
     ) -> SceneUpdateResult<SceneResult, SceneName> {
         self.result.clone()
     }

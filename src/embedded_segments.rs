@@ -5,8 +5,7 @@ use embedded_graphics::text::Text;
 use embedded_graphics::Drawable;
 use pixels_graphics_lib::buffer_graphics_lib::Graphics;
 use pixels_graphics_lib::prelude::SceneUpdateResult::Pop;
-use pixels_graphics_lib::prelude::{KeyCode, Scene, SceneUpdateResult, Timing, BLACK, FxHashSet};
-use pixels_graphics_lib::MouseData;
+use pixels_graphics_lib::prelude::*;
 
 use crate::{SceneName, SceneResult};
 
@@ -49,6 +48,7 @@ impl Scene<SceneResult, SceneName> for EmbeddedSegmentsScene {
         _: &Timing,
         _: &MouseData,
         _: &FxHashSet<KeyCode>,
+        _: &Window
     ) -> SceneUpdateResult<SceneResult, SceneName> {
         self.result.clone()
     }

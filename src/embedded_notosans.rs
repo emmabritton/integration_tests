@@ -1,7 +1,7 @@
 use noto_sans_mono_bitmap::{get_raster, FontWeight, RasterHeight};
 use pixels_graphics_lib::buffer_graphics_lib::Graphics;
 use pixels_graphics_lib::prelude::SceneUpdateResult::Pop;
-use pixels_graphics_lib::prelude::{Color, KeyCode, Scene, SceneUpdateResult, Timing, BLACK, FxHashSet};
+use pixels_graphics_lib::prelude::*;
 use pixels_graphics_lib::MouseData;
 
 use crate::{SceneName, SceneResult};
@@ -50,6 +50,7 @@ impl Scene<SceneResult, SceneName> for EmbeddedSansScene {
         _: &Timing,
         _: &MouseData,
         _: &FxHashSet<KeyCode>,
+        _: &Window
     ) -> SceneUpdateResult<SceneResult, SceneName> {
         self.result.clone()
     }

@@ -74,6 +74,7 @@ impl Scene<SceneResult, SceneName> for MenuScene {
         _: &Timing,
         _: &MouseData,
         _: &FxHashSet<KeyCode>,
+        _: &Window
     ) -> SceneUpdateResult<SceneResult, SceneName> {
         self.result.clone()
     }
